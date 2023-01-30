@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "974231427405",
+    "project_id": "flash-chat-5e74d",
+    "storage_bucket": "flash-chat-5e74d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974231427405:android:b39eef321c2be17ff47f04",
+        "android_client_info": {
+          "package_name": "co.Lichyo.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974231427405-i0d09hb9holhdilcssckklhs0fgms0ml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm7zfjWKwYgWW3OZs62kms5z_JtgPSOkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974231427405-i0d09hb9holhdilcssckklhs0fgms0ml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
