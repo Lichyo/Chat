@@ -19,6 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
   late User loggedInUser;
   late String messageText;
   late String? senderEmail;
+  final messageController = TextEditingController();
 
   void getCurrentUser() async {
     try {
@@ -100,6 +101,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      controller: messageController,
                       onChanged: (value) {
                         messageText = value;
                       },
@@ -112,6 +114,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         'text': messageText,
                         'senderEmail': senderEmail,
                       });
+                      setState(() {
+                        messageController.clear();
+                      });
                     },
                     child: const Text(
                       'Send',
@@ -123,20 +128,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class MessageBubble extends StatelessWidget {
-  const MessageBubble({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Material(
-      color: Colors.lightBlue,
-      child: Padding(
-        padding: EdgeInsets.all(15.0),
       ),
     );
   }
