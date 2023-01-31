@@ -79,6 +79,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       await _firestore.collection('messages').add({
                         'text': messageText,
                         'senderEmail': senderEmail,
+                        'sendingTime': DateTime.now(),
                       });
                       setState(() {
                         messageController.clear();
@@ -106,25 +107,35 @@ class MessageStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('messages').snapshots(),
+      stream: _firestore
+          .collection('messages')
+          .orderBy(
+            'sendingTime',
+            descending: true,
+          )
+          .snapshots(),
       builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        final messages = snapshot.data!.docs;
         List<Widget> messageWidgets = [];
-        if (snapshot.hasData) {
-          final messages = snapshot.data!.docs;
-          for (var message in messages) {
-            final messageText = message.get('text');
-            final messageSender = message.get('senderEmail');
-            currentUser = loggedInUser.email!;
-            final messageWidget = MessageBubble(
-              text: messageText,
-              user: messageSender,
-              isMe: messageSender == currentUser ? true : false,
-            );
-            messageWidgets.add(messageWidget);
-          }
+        for (var message in messages) {
+          final messageText = message.get('text');
+          final messageSender = message.get('senderEmail');
+          currentUser = loggedInUser.email!;
+          final messageWidget = MessageBubble(
+            text: messageText,
+            user: messageSender,
+            isMe: messageSender == currentUser ? true : false,
+          );
+          messageWidgets.add(messageWidget);
         }
         return Expanded(
           child: ListView(
+            reverse: true,
             padding: const EdgeInsets.all(15.0),
             children: messageWidgets,
           ),
