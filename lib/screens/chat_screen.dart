@@ -33,14 +33,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void messageStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var message in snapshot.docs) {
-        print(message.data());
-      }
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -55,9 +47,8 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: const Icon(Icons.close),
               onPressed: () {
-                // _auth.signOut();
-                // Navigator.pop(context);
-                messageStream();
+                _auth.signOut();
+                Navigator.pop(context);
               }),
         ],
         title: const Text('⚡️Chat'),
@@ -68,32 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('messages').snapshots(),
-              builder: (context, snapshot) {
-                List<Text> messageWidgets = [];
-                if (snapshot.hasData) {
-                  final messages = snapshot.data!.docs;
-                  for (var message in messages) {
-                    final messageText = message.get('text');
-                    final messageSender = message.get('senderEmail');
-                    final messageWidget = Text(
-                      '$messageSender say : $messageText.',
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                      ),
-                    );
-                    messageWidgets.add(messageWidget);
-                  }
-                }
-                return Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(15.0),
-                    children: messageWidgets,
-                  ),
-                );
-              },
-            ),
+            const MessageStream(),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -128,6 +94,76 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MessageStream extends StatelessWidget {
+  const MessageStream({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firestore.collection('messages').snapshots(),
+      builder: (context, snapshot) {
+        List<Widget> messageWidgets = [];
+        if (snapshot.hasData) {
+          final messages = snapshot.data!.docs;
+          for (var message in messages) {
+            final messageText = message.get('text');
+            final messageSender = message.get('senderEmail');
+            final messageWidget = MessageBubble(text: messageText, user: messageSender);
+            messageWidgets.add(messageWidget);
+          }
+        }
+        return Expanded(
+          child: ListView(
+            padding: const EdgeInsets.all(15.0),
+            children: messageWidgets,
+          ),
+        );
+      },
+    );
+  }
+}
+
+
+class MessageBubble extends StatelessWidget {
+  const MessageBubble({Key? key, required this.text, required this.user})
+      : super(key: key);
+
+  final String text;
+  final String user;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            user,
+            style: const TextStyle(
+              fontSize: 13.0,
+              color: Colors.black54,
+            ),
+          ),
+          Material(
+            color: Colors.lightBlueAccent,
+            borderRadius: BorderRadius.circular(25.0),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
