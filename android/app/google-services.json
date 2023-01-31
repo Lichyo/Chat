@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "974231427405",
-    "project_id": "flash-chat-5e74d",
-    "storage_bucket": "flash-chat-5e74d.appspot.com"
+    "project_number": "587864408843",
+    "project_id": "flash-chat-4925c",
+    "storage_bucket": "flash-chat-4925c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:974231427405:android:b39eef321c2be17ff47f04",
+        "mobilesdk_app_id": "1:587864408843:android:e7522cc062f6d11cb4d80e",
         "android_client_info": {
-          "package_name": "co.Lichyo.flash_chat"
+          "package_name": "com.lichyo.flash_chat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "974231427405-i0d09hb9holhdilcssckklhs0fgms0ml.apps.googleusercontent.com",
+          "client_id": "587864408843-0kbllu6o3l8d8bsc18vsrfh63fucsd45.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAm7zfjWKwYgWW3OZs62kms5z_JtgPSOkk"
+          "current_key": "AIzaSyCgE2RQYZA9Pkkv90mdaZUvuq7HFUfen7I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "974231427405-i0d09hb9holhdilcssckklhs0fgms0ml.apps.googleusercontent.com",
+              "client_id": "587864408843-0kbllu6o3l8d8bsc18vsrfh63fucsd45.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

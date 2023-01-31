@@ -13,13 +13,12 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
 
   @override
   void initState() {
     super.initState();
 
-    controller =
+    AnimationController controller =
         AnimationController(vsync: this, duration: Duration(seconds: 1), upperBound: 100);
     controller.forward();
     controller.addListener(() {
